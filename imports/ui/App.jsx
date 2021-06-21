@@ -6,16 +6,20 @@ import { MachineCollection } from '/imports/api/MachineCollection.js';
 import { MachineForm } from './MachineForm';
 
 export const App = () => {
-  const machine = useTracker(() => MachineCollection.find({},{ sort:{ createdAt:-1}}).fetch());
+  const machine = useTracker(() => MachineCollection.find({}, { sort: { createdAt: -1 } }).fetch());
 
-const deleteTask = ()=>{}
+  const deleteMachine =  (machine) => MachineCollection.remove(machine._id);
+  const onClickMachine = (machine) => {
+    /** TOD */
+    alert(machine.title)
+  }
 
   return (
     <div className="app">
       <header>
         <div className="app-bar">
           <div className="app-header">
-            <h1>Welcome!</h1>
+            <h1>Management App!</h1>
           </div>
         </div>
       </header>
@@ -28,49 +32,18 @@ const deleteTask = ()=>{}
             <Machine
               key={machine._id}
               machine={machine}
-              onCheckboxClick={toggleChecked}
-              onDeleteClick={deleteTask}
+              onClickMachine={onClickMachine}
+              onDeleteClick={deleteMachine}
             />
           ))}
         </ul>
       </div>
     </div>
   );
-
-  return (
-
-    <div>
-      <h1>Welcome to Meteor!</h1>
-      <MachineForm />
-
-      <ul>
-        {
-          machine.map(machine => <machine
-            key={task._id}
-            task={task}
-            onCheckboxClick={toggleChecked}
-            onDeleteClick={deleteTask}/>
-          )}
-
-      </ul>
-
-      <ul>
-        {machine.map(machine => <Machine key={machine._id} machine={machine} onCheckboxClick={toggleChecked} />)}
-      </ul>
-    </div>
-  )
 }
 
 
-const toggleChecked = ({ _id, isChecked }) => {
-  MachineCollection.update(_id, {
-    $set: {
-      isChecked: !isChecked
-    }
-  })
-};
 
-const deleteMachine = ({ _id }) => TasksMachine.remove(_id);
 
 
 
