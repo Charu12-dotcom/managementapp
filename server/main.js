@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { MachineCollection } from '/imports/api/MachineCollection';
-//import '../imports/api/machine.js';
+import { WritesCollection } from '/imports/api/WritesCollection';
 
 const insertMachine = (machine) => MachineCollection.insert({ 'title': machine });
 
