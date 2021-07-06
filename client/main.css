@@ -1,6 +1,6 @@
 body {
-    font-family: sans-serif;
-    background-color: lightblue;
+    font-family: serif;
+    background-color: white;
     background-image: linear-gradient(to bottom, #315481, #918e82 100%);
     background-attachment: fixed;
     position: absolute;
@@ -55,7 +55,7 @@ button.delete:focus {
 }
 
 header {
-    background: #d2edf4;
+    background: #59919f;
     background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
     padding: 20px 15px 15px 15px;
     position: relative;
@@ -84,7 +84,7 @@ header {
     box-sizing: border-box;
     padding: 10px 6px;
     background: transparent;
-    border: 1px solid #aaa;
+    border: 1px solid rgb(241, 223, 223);
     width: 100%;
     font-size: 1em;
     margin-right: 16px;
@@ -97,7 +97,7 @@ header {
 .machine-form>button {
     min-width: 100px;
     height: 95%;
-    background-color: #315481;
+    background-color: #99a2ae;
 }
 
 .machine {
@@ -117,4 +117,53 @@ header {
 
 .machine>li>span {
     flex-grow: 1;
+}
+
+.machine-form {
+    margin-top: 1rem;
+}
+
+filter {
+    display: flex;
+    justify-content: center;
+}
+
+.filter>button {
+    background-color: #62807e;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form>div {
+    margin: 8px;
+}
+
+.login-form>div>label {
+    font-weight: bold;
+}
+
+.login-form>div>input {
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding: 10px 6px;
+    background: transparent;
+    border: 1px solid #aaa;
+    width: 100%;
+    font-size: 1em;
+    margin-right: 16px;
+    margin-top: 4px;
+}
+
+.login-form>div>input:focus {
+    outline: 0;
+}
+
+.login-form>div>button {
+    background-color: #62807e;
 }

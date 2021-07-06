@@ -44,7 +44,7 @@ export class NotizenWrite extends Component {
       })
     }
 
-    const newEvent = {
+    const newEvent1 = {
       title: "",
       description: "",
       date: ""
@@ -136,7 +136,7 @@ export class NotizenWrite extends Component {
                   className="form-control"
                   placeholder="Enter date in the format mm.dd.yyyy"
                   name="date"
-                  value={machine.date ? machine.date : ""}
+                  
                   onChange={this.handleChange}
                 />
               </div>

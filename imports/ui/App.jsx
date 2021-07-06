@@ -8,48 +8,94 @@ import { MachineAdd } from './MachineAdd';
 import { NotizenWrite } from './NotizenWrite';
 import { withTracker } from 'meteor/react-meteor-data';
 import { WritesCollection } from "../api/WritesCollection";
-import { Navbar, Nav, Container } from 'react-bootstrap';
+/*import { Navbar, Nav, Container } from 'react-bootstrap';*/
+import { Dropdown } from 'react-bootstrap';
+import { LoginForm } from './LoginForm';
+
+
 
 
 
 
 
 export const App = () => {
+  const [hideCompleted, setHideCompleted] = useState(false)
+
+  const tasks = useTracker(() => TasksCollection.find(hideCompleted ? { isChecked: { $ne: true } } : {}, { sort: { createdAT: -1 } }).fetch())
+
+  const pendingTasksTitle = useTracker(() => TasksCollection.find({ isChecked: { $ne: true } }).count())
+
+  const user = useTracker(() => Meteor.user());
+  const machine = useTracker(() => TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch());
   return (
-    <Router>
-      <div className="app">
-        <Navigation/>
-        <header>
-          <div className="app-bar">
-            <div className="app-header">
-              <h1>Management App!</h1>
+
+  
+
+          <div>
+          <header>
+            <div className="app-bar">
+              <div className="app-header">
+                <h1>Management App!</h1>
+              </div>
             </div>
-          </div>
 
-        </header>
-      </div>
-
-      <Switch>
-        <Route path="/add">
+          </header>
           <MachineAdd />
-        </Route>
-        <Route path="/write">
-          <WriteApp />
-          <NotizenWrite />
-        </Route>
-        <Route path="/">
-          <MachineApp />
-        </Route>
+          <div className="main">
+        {user ? (
+          <Fragment>
+
+            <TaskForm />
+            <div className="filter">
+              <button onClick={() => setHideCompleted(!hideCompleted)}>
+                {hideCompleted ? 'Show All' : 'Hide Completed'}
+              </button>
+            </div>
+
+            <ul className="tasks">
+              {tasks.map(task => <Task key={task._id} _id={task._id} isChecked={task.isChecked} text={task.text} />)}
+            </ul>
+          </Fragment>
+        ) : (
+          <LoginForm />
+        )}
+
+     
+
+          
+          
 
 
-      </Switch>
 
-    </Router>
+          <Switch>
+            <Route exact path="/" component={Home}>
+              <MachineAdd />
+            </Route>
+            <Route path="/add" component={AddMachine}></Route>
+            <AddMachine />
 
 
-  )
+            <Route path="/write" component={WriteNotizen}>
+              <WriteApp />
+              <NotizenWrite />
+            </Route>
+            <Route path="/" component={Aboutus}>
+              <MachineApp />
+            </Route>
+
+
+          </Switch>
+          </div >
+    </div>
+  );
 }
 
+
+
+
+
+
+          
 
 
 
@@ -77,7 +123,23 @@ const MachineApp = () => {
           />
         ))}
       </ul>
+      <div className="dropdown">
+        <Dropdown>
+          <Dropdown.Toggle
+            variant="secondary btn-sm"
+            id="dropdown-basic">
+            Language
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu style={{ backgroundColor: '#73a47' }}>
+            <Dropdown.Item href="#" >Arabic</Dropdown.Item>
+            <Dropdown.Item href="#">English</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
     </div>
+
+
 
   );
 }
@@ -103,7 +165,6 @@ const WriteApp = withTracker(() => {
 })(WriteComponent);
 
 export default WriteComponent;
-
 
 
 
